@@ -16,10 +16,10 @@
   ],
   "author": "Paul Wilcox",
   "license": "ISC",
-  "dependencies": {},
-  "optionalDependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "console.table": "^0.10.0",
-    "puppeteer": "^1.19.0"
-  }
+    "puppeteer": "^2.0.0"
+  },
+  "optionalDependencies": {},
+  "devDependencies": {}
 }
