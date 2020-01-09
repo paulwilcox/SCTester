@@ -1,10 +1,10 @@
-let testServerExecutor = require('./testServerExecutor.js');
+let testServerExecutor = require('./scTester.js');
 
 let config = {
-    testDirectory: './example',
+    testDirectory: './tests',
     port: 8082,
-    serverImports: `let math = require('math.js');`,
-    clientImports: `import math from '/node_modules/math.js/index.js';`
+    serverImports: `let distance = require('./sampleLibraries/distanceFunc.server.js');`,
+    clientImports: `import distance from '/sampleLibraries/distanceFunc.client.js';`
 };
 
 testServerExecutor(config);

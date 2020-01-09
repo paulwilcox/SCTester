@@ -3,7 +3,7 @@ let fs = require('fs');
 module.exports = function (config) {
 
     let ts = fs
-        .readFileSync('./testServerTemplate.js').toString()
+        .readFileSync('./scTesterTemplate.js').toString()
         .replace('__testDirectory__', config.testDirectory)
         .replace('__port__', config.port)
         .replace('__serverImports__', config.serverImports)

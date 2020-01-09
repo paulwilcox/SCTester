@@ -3,10 +3,10 @@ let http = require('http');
 let fs = require('fs');
 let puppeteer = require('puppeteer');
 let { performance } = require('perf_hooks');
-__serverImports__
+let distance = require('./sampleLibraries/distanceFunc.server.js');
 
-let testDirectory = '__testDirectory__';
-let port = __port__; 
+let testDirectory = './tests';
+let port = 8082; 
 
 (async () => {
 
@@ -159,7 +159,7 @@ function startServer () {
                 <body>
                 <script type = 'module'>
             
-                    __clientImports__
+                    import distance from '/sampleLibraries/distanceFunc.client.js';
 
                     async function testFunc () {
                         ${content}  

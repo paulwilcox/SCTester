@@ -4,7 +4,7 @@
   "description": "Javascript function testing for server and client.",
   "main": "./scTester.js",
   "scripts": {
-    "gitPublish": "node_scripts\\gitPublish.cmd"
+    "gitPublish": "git push https://github.com/paulwilcox/SCTester master"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,6 @@
   "optionalDependencies": {},
   "devDependencies": {
     "console.table": "^0.10.0",
-    "math.js": "^1.1.45",
     "puppeteer": "^1.19.0"
   }
 }
