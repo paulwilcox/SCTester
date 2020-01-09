@@ -1,3 +1,8 @@
+require('console.table');
+let http = require('http');
+let fs = require('fs');
+let puppeteer = require('puppeteer');
+let { performance } = require('perf_hooks');
 let distance = require('./sampleLibraries/distanceFunc.server.js');
 
 let testDirectory = './tests';
