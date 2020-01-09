@@ -1,0 +1,26 @@
+{
+  "name": "sctester",
+  "version": "0.0.0",
+  "description": "Javascript function testing for server and client.",
+  "main": "./scTester.js",
+  "scripts": {
+    "gitPublish": "node_scripts\\gitPublish.cmd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulwilcox/SCTester"
+  },
+  "keywords": [
+    "testing",
+    "javascript"
+  ],
+  "author": "Paul Wilcox",
+  "license": "ISC",
+  "dependencies": {},
+  "optionalDependencies": {},
+  "devDependencies": {
+    "console.table": "^0.10.0",
+    "math.js": "^1.1.45",
+    "puppeteer": "^1.19.0"
+  }
+}
