@@ -17,7 +17,7 @@ let port = __port__;
 
         let fileFull = `${testDirectory}/${file}`;
 
-        if (file.startsWith('testServer') || !file.endsWith('.js'))
+        if (file.startsWith('_') || !file.endsWith('.js'))
             continue;        
 
         for (let location of ['client', 'server']) {
@@ -36,14 +36,10 @@ let port = __port__;
                     if (file.endsWith('.c.js'))
                         continue;
 
-                    eval(`
-                        async function testFunc() {
-                            ${contents}
-                        }
-                    `);
-
+                    eval(contents);
+                    
                     let t0 = performance.now();
-                    result.success = await testFunc();
+                    result.success = (await test()) === true;
                     result.time = performance.now() - t0;
 
                 }
@@ -52,7 +48,7 @@ let port = __port__;
                     if (file.endsWith('.s.js'))
                         continue;
                     let response = await makeClientRequest(fileFull);
-                    result.success = response.split(';')[0];
+                    result.success = response.split(';')[0] === 'true';
                     result.time = response.split(';')[1];
                 }
 
@@ -161,19 +157,15 @@ function startServer () {
             
                     __clientImports__
 
-                    async function testFunc () {
-                        ${content}  
-                    } 
+                    ${content}   
 
                     let div = document.createElement('div');
                     div.id = 'results'; 
 
                     let t0 = performance.now();
 
-                    testFunc()
-                    .then(res => {
-                        div.innerHTML = res;
-                    })
+                    Promise.resolve(test())
+                    .then(res => { div.innerHTML = res; })
                     .then(() => 
                         div.innerHTML += ';' + (performance.now() - t0)
                     )

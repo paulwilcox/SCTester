@@ -1,4 +1,7 @@
-let a = (5 + 7) / 2;
+function test () {
+        
+    let a = (5 + 7) / 2;
 
-return a == 6;
+    return a == 6;
 
+}

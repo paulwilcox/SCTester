@@ -1,5 +1,7 @@
+function test () {
+        
+    let val = 5 + 7;
 
-let val = 5 + 7;
+    return val == 12;
 
-return val == 12;
-
+}

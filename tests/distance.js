@@ -1,4 +1,8 @@
 
-let d = distance(5,7);
+function test () {
 
-return d == 2;
+    let d = distance(5,7);
+
+    return d == 2;
+
+}
