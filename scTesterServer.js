@@ -11,6 +11,10 @@ let port = 8082;
 
 (async () => {
 
+    console.log();
+    console.log(chalk.bgBlue('starting SCTester'));
+    console.log();
+
     let server = startServer();
     let results = [];
     let errors = [];
@@ -58,7 +62,7 @@ let port = 8082;
 
             }
             catch (err) {
-                result.success = `error:${errors.length}`;
+                result.success = `err:${errors.length}`;
                 errors.push(err);
             }
 
@@ -74,12 +78,20 @@ let port = 8082;
         console.log(errors[e]);
     }
 
-    // rename 'time' to hh:mm:ss:f
-    results['hh:mm:ss.f'] = results['time'];
-    results.time = null;
+    // friendlier formats and headers
+    for(let result of results) {
+        if (result.time === undefined)
+            result.time = '';
+        result['hh:mm:ss.f'] = result.time;
+        delete result.time;
+        result.success = 
+            result.success === true
+            ? chalk.greenBright(result.success)
+            : chalk.red(result.success); 
+    }
     
     console.log();
-    console.log(chalk.green(`SCTester Results:`))
+    console.log(chalk.blue.underline(`SCTester-Results:`))
     console.table(results);
     console.log();
 
