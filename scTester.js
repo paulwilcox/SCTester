@@ -1,12 +1,14 @@
 let fs = require('fs');
+let path = require('path');
 
 module.exports = function (config) {
 
+    let applicationPath = path.dirname(require.main.filename);
     let scTesterTemplate = __dirname + '/scTesterTemplate.js';
-    let scTesterServer = './scTesterServer.js';
-    
+    let scTesterServer = applicationPath + '/scTesterServer.js';
+
     console.log(`Creating ${scTesterServer}`);
-    console.log(`  from ${scTesterTemplate}`)
+    console.log(`  from ${scTesterTemplate}`);
 
     let ts = fs
         .readFileSync(scTesterTemplate).toString()
