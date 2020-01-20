@@ -1,4 +1,5 @@
 require('console.table');
+let chalk = require('chalk');
 let http = require('http');
 let fs = require('fs');
 let puppeteer = require('puppeteer');
@@ -12,6 +13,7 @@ let port = __port__;
 
     let server = startServer();
     let results = [];
+    let errors = [];
 
     for (let file of fs.readdirSync(testDirectory)) {
 
@@ -56,8 +58,8 @@ let port = __port__;
 
             }
             catch (err) {
-                result.success = false;
-                result.errorMsg = err;
+                result.success = `error:${errors.length}`;
+                errors.push(err);
             }
 
             results.push(result);
@@ -67,7 +69,15 @@ let port = __port__;
 
     server.close();
 
+    for(let e = 0; e < errors.length; e++) {
+        console.log(chalk.red(`ERROR ${e}:`));
+        console.log(errors[e]);
+    }
+    
+    console.log();
+    console.log(chalk.green(`SCTester Results:`))
     console.table(results);
+    console.log();
 
     process.exit(results.some(res => !res.success) ? 1 : 0);
 
