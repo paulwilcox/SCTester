@@ -1,3 +1,9 @@
+Note that this package is still in version 0.  In other
+words, it probably won't work unless you're really keeping 
+up with what I'm doing.  
+
+Don't worry, I'll try to have this usable soon.
+
 ## Description
 
 Just a simple testing tool to test javascript functions in both 
