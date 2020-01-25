@@ -2,9 +2,30 @@ require('console.table');
 let chalk = require('chalk');
 let http = require('http');
 let fs = require('fs');
-let puppeteer = require('puppeteer');
+let puppeteer; 
 let { performance } = require('perf_hooks');
 __serverImports__
+
+try {
+    puppeteer = require('puppeteer');
+}
+catch (err) {
+    let log = txt => console.log(chalk.red(txt));
+    if(err.code == 'MODULE_NOT_FOUND');
+        log('Puppeteer is required by SCTester.');
+        log('');
+        log('It is a peer dependency, so it doesnt get ');
+        log('downloaded together with SCTester (Otherwise ');
+        log('youd have to download multiple Chromium instances).');
+        log('');
+        log('To download puppeteer globaly, do:');
+        log('  npm install -g puppeteer');
+        log('');
+        log('To download it locally as a dev-dependency, do:');
+        log('  npm install --save-dev puppeteer');
+        log('');
+    throw 'Stopping because puppeteer is not installed.';
+}
 
 let testDirectory = '__testDirectory__';
 let port = __port__; 
@@ -203,7 +224,7 @@ function startServer () {
             `;
 
         }
-       
+
         response.writeHead(200, { 'Content-Type': cType });
         response.end(content, 'utf-8');
 

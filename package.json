@@ -19,11 +19,9 @@
   "dependencies": {
     "chalk": "^3.0.0",
     "console.table": "^0.10.0",
-    "puppeteer": "^2.0.0"
+    "puppeteer": "^2.0.0",
+    "yargs": "^15.1.0"
   },
   "optionalDependencies": {},
-  "devDependencies": {},
-  "peerDependencies": {
-    "puppeteer": "^2.0.0"
-  }
+  "devDependencies": {}
 }
