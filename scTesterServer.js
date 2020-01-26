@@ -1,13 +1,13 @@
-require(__dirName + '/console.table');
-let chalk = require(__dirname + '/chalk');
-let http = require(__dirname + '/http');
-let fs = require(__dirname + '/fs');
+require('console.table');
+let chalk = require('chalk');
+let http = require('http');
+let fs = require('fs');
 let puppeteer; 
-let { performance } = require(__dirname + '/perf_hooks');
-__serverImports__
+let { performance } = require('perf_hooks');
+let distance = require('./sampleLibraries/distanceFunc.server.js');
 
 try {
-    puppeteer = require(__dirname + '/puppeteer');
+    puppeteer = require('puppeteer');
 }
 catch (err) {
     let log = txt => console.log(chalk.red(txt));
@@ -27,8 +27,8 @@ catch (err) {
     throw 'Stopping because puppeteer is not installed.';
 }
 
-let testDirectory = '__testDirectory__';
-let port = __port__; 
+let testDirectory = './tests';
+let port = 8083; 
 
 (async () => {
 
@@ -202,7 +202,8 @@ function startServer () {
                 <body>
                 <script type = 'module'>
             
-                    __clientImports__
+                    import distance from '/sampleLibraries/distanceFunc.client.js';
+
 
                     ${content}   
 

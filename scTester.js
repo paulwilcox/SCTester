@@ -14,10 +14,11 @@ let yargs =
     .alias({testDirectory: 'td'})
     .argv;
 
-console.log(`process.cwd()`);
-console.log('  ' + process.cwd());
+/*
+    process.cwd() // the user
+*/ 
 
-let applicationPath = process.cwd();
+let applicationPath = __dirname;
 let scTesterTemplate = __dirname + '/scTesterTemplate.js';
 let scTesterServer = applicationPath + '/scTesterServer.js';
 let serverImports = yargs.testDirectory + '/_imports.s.js';
