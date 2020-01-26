@@ -14,10 +14,14 @@ let yargs =
     .alias({testDirectory: 'td'})
     .argv;
 
-console.log(`require.main.filename:`);
-console.log('  ' + require.main.filename);
+console.log(`process.env.INIT_CWD:`);
+console.log('  ' + process.env.INIT_CWD);
+console.log('');
+console.log(`__dirname:`);
+console.log('  ' + __dirname);
 
-let applicationPath = path.dirname(require.main.filename);
+
+let applicationPath = process.env.INIT_CWD;
 let scTesterTemplate = __dirname + '/scTesterTemplate.js';
 let scTesterServer = applicationPath + '/scTesterServer.js';
 let serverImports = yargs.testDirectory + '/_imports.s.js';
