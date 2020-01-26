@@ -14,6 +14,9 @@ let yargs =
     .alias({testDirectory: 'td'})
     .argv;
 
+console.log(`require.main.filename:`);
+console.log('  ' + require.main.filename);
+
 let applicationPath = path.dirname(require.main.filename);
 let scTesterTemplate = __dirname + '/scTesterTemplate.js';
 let scTesterServer = applicationPath + '/scTesterServer.js';

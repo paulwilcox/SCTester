@@ -16,7 +16,11 @@ code for each.
 
 ## Example
 
-    node scTester --td ./tests --port 8082
+    npm install sctester -g
+
+    scTester --td ./tests --port 8082
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 
 ## History
 
