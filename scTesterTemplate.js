@@ -3,10 +3,10 @@ let scRequire = package =>
 
 scRequire('console.table');
 let chalk = scRequire('chalk');
-let http = scRequire('http');
-let fs = scRequire('fs');
+let http = require('http');
+let fs = require('fs');
 let puppeteer; 
-let { performance } = scRequire('perf_hooks');
+let { performance } = require('perf_hooks');
 __serverImports__
 
 try {
