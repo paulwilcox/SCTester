@@ -1,6 +1,6 @@
 {
   "name": "sctester",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Javascript function testing for server and client.",
   "main": "./scTester.js",
   "bin": {
