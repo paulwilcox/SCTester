@@ -18,7 +18,7 @@ let yargs =
     process.cwd() // the user
 */ 
 
-let applicationPath = __dirname;
+let applicationPath = process.cwd();
 let scTesterTemplate = __dirname + '/scTesterTemplate.js';
 let scTesterServer = applicationPath + '/scTesterServer.js';
 let serverImports = yargs.testDirectory + '/_imports.s.js';
