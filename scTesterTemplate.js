@@ -1,13 +1,16 @@
-require(__dirname + '/console.table');
-let chalk = require(__dirname + '/chalk');
-let http = require(__dirname + '/http');
-let fs = require(__dirname + '/fs');
+let scRequire = package => 
+    require(__dirname + '/node_modules/' + package);
+
+scRequire('console.table');
+let chalk = scRequire('chalk');
+let http = scRequire('http');
+let fs = scRequire('fs');
 let puppeteer; 
-let { performance } = require(__dirname + '/perf_hooks');
+let { performance } = scRequire('perf_hooks');
 __serverImports__
 
 try {
-    puppeteer = require(__dirname + '/puppeteer');
+    puppeteer = scRequire('puppeteer');
 }
 catch (err) {
     let log = txt => console.log(chalk.red(txt));
