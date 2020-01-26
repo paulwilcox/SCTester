@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 let fs = require('fs');
-let path = require('path');
 
 let yargs = 
     require('yargs')
@@ -14,11 +13,7 @@ let yargs =
     .alias({testDirectory: 'td'})
     .argv;
 
-/*
-    process.cwd() // the user
-*/ 
-
-let applicationPath = process.cwd();
+let applicationPath = process.cwd(); // user's path
 let scTesterTemplate = __dirname + '/scTesterTemplate.js';
 let scTesterServer = applicationPath + '/scTesterServer.js';
 let serverImports = yargs.testDirectory + '/_imports.s.js';

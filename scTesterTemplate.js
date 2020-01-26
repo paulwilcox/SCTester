@@ -11,7 +11,7 @@ scRequire('console.table');
 let chalk = scRequire('chalk');
 let http = require('http');
 let fs = require('fs');
-let puppeteer; 
+let puppeteer = scRequire('puppeteer'); 
 let { performance } = require('perf_hooks');
 __serverImports__
 
