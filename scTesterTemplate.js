@@ -1,4 +1,4 @@
-require(__dirName + '/console.table');
+require(__dirname + '/console.table');
 let chalk = require(__dirname + '/chalk');
 let http = require(__dirname + '/http');
 let fs = require(__dirname + '/fs');
