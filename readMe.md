@@ -1,8 +1,9 @@
 Note that this package is still in version 0.  In other
-words, it probably won't work unless you're really keeping 
-up with what I'm doing.  
+words, it may not work and troubleshooting it might be 
+difficult at this time.  
 
-Don't worry, I'll try to have this usable soon.
+Don't worry, over time this becomes increasingly usable.
+When it seems robust enough, I'll mark it as version 1.
 
 ## Description
 
