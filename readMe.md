@@ -16,6 +16,7 @@ code for each (in the cases where the code is not specific to a server or client
 - Errors are organized for reference.
 - Output includes execution time.
 - Server is created and started for you.
+- Use the --browser boolean switch to launch a browser and run tests manually 
 
 ## Example
 
