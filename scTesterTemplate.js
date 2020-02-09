@@ -20,6 +20,23 @@ let port = __port__;
 
 (async () => {
 
+    if (__browser__) {
+        // See gidztech on Dec 21, 2018 at
+        // https://github.com/puppeteer/puppeteer/issues/3699
+        // for a possible way to click on the console tab.
+        // If you change his 'indexOf' to 'devtools://' and  
+        // condense his query selector to '#tab-network'
+        // you can get the 'networkTab'.  But there's no 'click'
+        // property and also you really get two devtools tabs.  
+        let srv = startServer();
+        let browser = await puppeteer.launch({devtools: true});
+        let pages = await browser.pages();
+        let page = pages[0];    
+        page.on('close', () => srv.close())
+        await page.goto(`http://127.0.0.1:${port}`);
+        return;
+    }
+
     console.log();
     console.log(chalk.bgBlue('Starting SCTester:'));
     console.log();
@@ -149,6 +166,24 @@ function startServer () {
     return http.createServer((request, response) => {
 
         let file = `.${request.url}`;
+
+        if (file == './') {
+            let c = '';
+            for(let f of fs.readdirSync(testDirectory)) {
+                if (f.startsWith('_'))
+                    continue;
+                c += `<li><a href=${testDirectory}/${f}>${f}</a></li>`
+            }
+            c = `
+                <p>
+                    Click on a link to run a test.  
+                    Then check the console.
+                </p>
+                <ul>${c}</ul>
+            `;
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.end(c, 'utf-8');
+        }
 
         let cType =
             file.endsWith('.css') ? 'text/css'

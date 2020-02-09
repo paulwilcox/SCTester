@@ -6,9 +6,11 @@ let yargs =
     require('yargs')
     .describe({
         testDirectory: 'The directory containing the test functions.',
-        port: 'The port on which to start puppeteer to run client tests.'
+        port: 'The port on which to start puppeteer to run client tests.',
+        browser: 'Opens up a browser for you to manually run tests'
     })
     .number('port')
+    .boolean('browser')
     .default({port: 8083})
     .alias({testDirectory: 'td'})
     .argv;
@@ -25,7 +27,8 @@ console.log(`  from ${scTesterTemplate}`);
 let ts = fs
     .readFileSync(scTesterTemplate).toString()
     .replace('__testDirectory__', yargs.testDirectory)
-    .replace('__port__', yargs.port);
+    .replace('__port__', yargs.port)
+    .replace('__browser__', yargs.browser);
 
 ts = ts.replace(
     '__serverImports__', 
@@ -40,7 +43,7 @@ ts = ts.replace(
         ? fs.readFileSync(clientImports).toString()
         : ''
 );
-    
+
 let writer = fs.createWriteStream(scTesterServer);
 writer.write(ts);
 writer.end(() => require(scTesterServer));
