@@ -231,10 +231,10 @@ function startServer () {
                         div.innerHTML += ';' + 
                         (performance.now() - t0)
                     )
-                    .catch(err => 
-                        div.innerHTML += 'error:' + 
-                        errorString(err)
-                    )
+                    .catch(err => {
+                        console.error(err);
+                        div.innerHTML += 'error:' + errorString(err)
+                    })
                     .finally(() => document.body.appendChild(div));
 
                 </script>
