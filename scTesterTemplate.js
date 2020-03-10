@@ -143,7 +143,7 @@ async function makeClientRequest (fileName) {
     page.on('pageerror', doError);
     page.on('error', doError); 
     page.on('requestfailed', request => doError(
-        `request: ${rquest.url()}; ` +
+        `request: ${request.url()}; ` +
         `error: ${request.failure().errorText}`
     ));
 
