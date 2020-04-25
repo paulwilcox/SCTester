@@ -48,7 +48,10 @@ let port = __port__;
     for (let file of fs.readdirSync(testDirectory)) {
 
         let fileFull = `${testDirectory}/${file}`;
-
+        let serverOnly = file.endsWith('.s.js');
+        let clientOnly = file.endsWith('.c.js');
+        let routeOnly = file.endsWith('.r.js');
+        
         if (file.startsWith('_') || !file.endsWith('.js'))
             continue;        
 
@@ -65,7 +68,7 @@ let port = __port__;
 
                 if (location == 'server') {
 
-                    if (file.endsWith('.c.js'))
+                    if (clientOnly || routeOnly)
                         continue;
 
                     eval(contents);
@@ -77,13 +80,17 @@ let port = __port__;
                 }
 
                 if (location == 'client') {
-                    if (file.endsWith('.s.js'))
+
+                    if (serverOnly || routeOnly)
                         continue;
+
                     let response = await makeClientRequest(fileFull);
                     if (response.startsWith('error:'))
                         throw response.slice(6);
+
                     result.success = response.split(';')[0] === 'true';
                     result.time = response.split(';')[1];
+
                 }
 
                 result.time = msToTime(result.time);                
@@ -165,87 +172,114 @@ function startServer () {
 
     return http.createServer((request, response) => {
 
-        let file = `.${request.url}`;
+        // Initializations
 
-        if (file == './') {
-            let c = '';
-            for(let f of fs.readdirSync(testDirectory)) {
-                if (f.startsWith('_'))
-                    continue;
-                c += `<li><a href=${testDirectory}/${f}>${f}</a></li>`
+            let file = `.${request.url}`;
+
+        // Browser Home: Serve the menu of tests 
+
+            if (file == './') {
+                let c = '';
+                for(let f of fs.readdirSync(testDirectory)) {
+                    if (f.startsWith('_'))
+                        continue;
+                    c += `<li><a href=${testDirectory}/${f}>${f}</a></li>`
+                }
+                c = `
+                    <p>
+                        Click on a link to run a test.  
+                        Then check the console.
+                    </p>
+                    <ul>${c}</ul>
+                `;
+                response.writeHead(200, { 'Content-Type': 'text/html' });
+                response.end(c, 'utf-8');
             }
-            c = `
-                <p>
-                    Click on a link to run a test.  
-                    Then check the console.
-                </p>
-                <ul>${c}</ul>
-            `;
-            response.writeHead(200, { 'Content-Type': 'text/html' });
-            response.end(c, 'utf-8');
-        }
 
-        let cType =
-            file.endsWith('.css') ? 'text/css'
-            : file.endsWith('.js') ? 'text/javascript'
-            : file.endsWith('.html') ? 'text/html'
-            : file.endsWith('.json') ? 'text/json'
-            : null;
+        // Identify the file type
 
-        if (cType == null) {
-            response.writeHead(204);
-            response.end();
-        }
+            let cType =
+                file.endsWith('.css') ? 'text/css'
+                : file.endsWith('.js') ? 'text/javascript'
+                : file.endsWith('.html') ? 'text/html'
+                : file.endsWith('.json') ? 'text/json'
+                : null;
 
-        let content;
+            if (cType == null) {
+                response.writeHead(204);
+                response.end();
+            }
 
-        try {
-            content = fs.readFileSync(file).toString(); 
-        }
-        catch (error) {
-            response.writeHead(500);
-            response.end(error.message);
-        }
+        // Load the file content
 
-        if (file.startsWith(testDirectory) && file.endsWith('.js')) {
+            let content;
 
-            cType = 'text/html';
-            content = `
-    
-                <body>
-                <script type = 'module'>
-            
-                    __clientImports__
-                    let errorString = ${errorString}
+            try {
+                content = fs.readFileSync(file).toString(); 
+            }
+            catch (error) {
+                response.writeHead(500);
+                response.end(error.message);
+            }
 
-                    ${content}   
+        // If it's a route file, obey it
 
-                    let div = document.createElement('div');
-                    div.id = 'results'; 
+            if (file.endsWith('.r.js')) {
+                eval(content);
+                if(!serve)
+                    throw `${file} did not produce serve()`;
+                serve(request, response);
+                return;
+            }
 
-                    let t0 = performance.now();
+        // If it's a test file, wrap it's contents
+        // in html test running code
 
-                    Promise.resolve(test())
-                    .then(res => div.innerHTML = res)
-                    .then(() => 
-                        div.innerHTML += ';' + 
-                        (performance.now() - t0)
-                    )
-                    .catch(err => {
-                        console.error(err);
-                        div.innerHTML += 'error:' + errorString(err)
-                    })
-                    .finally(() => document.body.appendChild(div));
+            let wrapInHtmlTestCode = 
+                file.startsWith(testDirectory) && 
+                file.endsWith('.js');
 
-                </script>
-                </body> 
-    
-            `;
+            if (wrapInHtmlTestCode) {
 
-        }
+                cType = 'text/html';
+                content = `
+        
+                    <body>
+                    <script type = 'module'>
+                
+                        __clientImports__
+                        let errorString = ${errorString}
 
-        response.writeHead(200, { 'Content-Type': cType });
-        response.end(content, 'utf-8');
+                        ${content}   
+
+                        let div = document.createElement('div');
+                        div.id = 'results'; 
+
+                        let t0 = performance.now();
+
+                        Promise.resolve(test())
+                        .then(res => div.innerHTML = res)
+                        .then(() => 
+                            div.innerHTML += ';' + 
+                            (performance.now() - t0)
+                        )
+                        .catch(err => {
+                            console.error(err);
+                            div.innerHTML += 'error:' + errorString(err)
+                        })
+                        .finally(() => document.body.appendChild(div));
+
+                    </script>
+                    </body> 
+        
+                `;
+
+            }
+
+        // Serve the contents
+
+            response.writeHead(200, { 'Content-Type': cType });
+            response.end(content, 'utf-8');
 
     })
     .listen(port);
