@@ -48,6 +48,7 @@ let port = __port__;
     for (let file of fs.readdirSync(testDirectory)) {
 
         let fileFull = `${testDirectory}/${file}`;
+        let browserOnly = file.endsWith('.b.js');
         let serverOnly = file.endsWith('.s.js');
         let clientOnly = file.endsWith('.c.js');
         let routeOnly = file.endsWith('.r.js');
@@ -68,7 +69,7 @@ let port = __port__;
 
                 if (location == 'server') {
 
-                    if (clientOnly || routeOnly)
+                    if (clientOnly || routeOnly || browserOnly)
                         continue;
 
                     eval(contents);
@@ -81,7 +82,7 @@ let port = __port__;
 
                 if (location == 'client') {
 
-                    if (serverOnly || routeOnly)
+                    if (serverOnly || routeOnly || browserOnly)
                         continue;
 
                     let response = await makeClientRequest(fileFull);
