@@ -109,10 +109,14 @@ let port = __port__;
 
     server.close();
 
-    for(let e = 0; e < errors.length; e++) {
-        console.log(chalk.red(`ERROR ${e}:`));
-        console.log(errors[e]);
-    }
+    if(__suppress__)
+        console.log(chalk.red('Errors are suppressed.'));
+    else 
+        for(let e = 0; e < errors.length; e++) {
+            console.log(chalk.red(`ERROR ${e}:`));
+            if(!__suppress__)
+                console.log(errors[e]);
+        }
 
     // friendlier formats and headers
     for(let result of results) {
