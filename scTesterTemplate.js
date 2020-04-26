@@ -230,11 +230,17 @@ function startServer () {
         // If it's a route file, obey it
 
             if (file.endsWith('.r.js')) {
-                eval(content);
-                if(!serve)
-                    throw `${file} did not produce serve()`;
-                serve(request, response);
-                return;
+                try {
+                    eval(content);
+                    if(serve == undefined) 
+                        throw `${file} did not produce serve()`;
+                    serve(request, response);
+                    return;
+                }
+                catch(err) {
+                    response.writeHead(500);
+                    response.end(err.message);
+                }
             }
 
         // If it's a test file, wrap it's contents
