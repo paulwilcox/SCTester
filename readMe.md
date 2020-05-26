@@ -1,12 +1,3 @@
-Note that this package is still in version 0.  In other
-words, it may not work and troubleshooting it might be 
-difficult at this time.  
-
-Don't worry, over time this becomes increasingly usable.
-When it seems robust enough, I'll mark it as version 1.
-
-## Description
-
 Just a simple testing tool to test javascript functions in both 
 the client and server environments without having to write 
 code for each (in the cases where the code is not specific to a server or client need).    
