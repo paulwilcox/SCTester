@@ -4,7 +4,7 @@
   "description": "Javascript function testing for server and client.",
   "main": "./scTester.js",
   "bin": {
-    "sctester": "./scTester.js"
+    "sctester": "./scTester.js" 
   },
   "scripts": {
     "gitPublish": "git push https://github.com/paulwilcox/SCTester master"
