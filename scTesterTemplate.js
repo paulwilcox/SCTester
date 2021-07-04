@@ -22,7 +22,7 @@ let port = __port__;
 
     if (__browser__) {
         // See gidztech on Dec 21, 2018 at
-        // https://github.com/puppeteer/puppeteer/issues/3699
+        // github.com/puppeteer/puppeteer/issues/3699
         // for a possible way to click on the console tab.
         // If you change his 'indexOf' to 'devtools://' and  
         // condense his query selector to '#tab-network'
