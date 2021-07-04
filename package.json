@@ -4,7 +4,7 @@
   "description": "Javascript function testing for server and client.",
   "main": "./scTester.js",
   "bin": {
-    "sctester": "./scTester.js" 
+    "sctester": "./scTester.js"
   },
   "scripts": {
     "gitPublish": "git push https://github.com/paulwilcox/SCTester master"
@@ -20,11 +20,9 @@
   "author": "Paul Wilcox",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.1.1",
     "console.table": "^0.10.0",
-    "puppeteer": "^3.0.4",
-    "yargs": "^15.1.0"
-  },
-  "optionalDependencies": {},
-  "devDependencies": {}
+    "puppeteer": "^10.1.0",
+    "yargs": "^17.0.1"
+  }
 }
