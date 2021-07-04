@@ -199,6 +199,7 @@ function startServer () {
                 `;
                 response.writeHead(200, { 'Content-Type': 'text/html' });
                 response.end(c, 'utf-8');
+                return;
             }
 
         // Identify the file type
@@ -213,6 +214,7 @@ function startServer () {
             if (cType == null) {
                 response.writeHead(204);
                 response.end();
+                return;
             }
 
         // Load the file content
@@ -225,6 +227,7 @@ function startServer () {
             catch (error) {
                 response.writeHead(500);
                 response.end(error.message);
+                return;
             }
 
         // If it's a route file, obey it
@@ -240,6 +243,7 @@ function startServer () {
                 catch(err) {
                     response.writeHead(500);
                     response.end(err.message);
+                    return;
                 }
             }
 
@@ -291,6 +295,7 @@ function startServer () {
 
             response.writeHead(200, { 'Content-Type': cType });
             response.end(content, 'utf-8');
+            return;
 
     })
     .listen(port);
