@@ -22,7 +22,7 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "console.table": "^0.10.0",
-    "puppeteer": "^10.1.0",
+    "puppeteer": "^13.5.2",
     "yargs": "^17.0.1"
   }
 }
