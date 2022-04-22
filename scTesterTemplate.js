@@ -8,7 +8,7 @@ let scRequire = package =>
     require(npmRoot + '/sctester/node_modules/' + package);
 
 scRequire('console.table');
-let chalk = scRequire('chalk');
+let clic = scRequire('cli-color');
 let http = require('http');
 let fs = require('fs');
 let puppeteer = scRequire('puppeteer'); 
@@ -38,7 +38,7 @@ let port = __port__;
     }
 
     console.log();
-    console.log(chalk.bgBlue('Starting SCTester:'));
+    console.log(clic.bgBlue('Starting SCTester:'));
     console.log();
 
     let server = startServer();
@@ -110,10 +110,10 @@ let port = __port__;
     server.close();
 
     if(__suppress__)
-        console.log(chalk.red('Errors are suppressed.'));
+        console.log(clic.red('Errors are suppressed.'));
     else 
         for(let e = 0; e < errors.length; e++) {
-            console.log(chalk.red(`ERROR ${e}:`));
+            console.log(clic.red(`ERROR ${e}:`));
             if(!__suppress__)
                 console.log(errors[e]);
         }
@@ -126,12 +126,12 @@ let port = __port__;
         delete result.time;
         result.success = 
             result.success === true
-            ? chalk.greenBright(result.success)
-            : chalk.red(result.success); 
+            ? clic.greenBright(result.success)
+            : clic.red(result.success); 
     }
     
     console.log();
-    console.log(chalk.blue.underline(`SCTester-Results:`))
+    console.log(clic.blue.underline(`SCTester-Results:`))
     console.table(results);
     console.log();
 
